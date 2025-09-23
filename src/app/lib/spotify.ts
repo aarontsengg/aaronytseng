@@ -26,11 +26,20 @@ async function getAccessToken() {
   return res.json() as Promise<{ access_token: string }>;
 }
 
+type SpotifyArtist = { name: string };
+type SpotifyImage = { url: string };
+type SpotifyTrack = {
+  name: string;
+  artists?: SpotifyArtist[];
+  album?: { images?: SpotifyImage[] };
+  external_urls?: { spotify?: string };
+};
+
 export async function getNowPlayingOrRecent() {
   const { access_token } = await getAccessToken();
 
   // Try currently playing
-  let res = await fetch(NOW_PLAYING_ENDPOINT, {
+  const res = await fetch(NOW_PLAYING_ENDPOINT, {
     headers: { Authorization: `Bearer ${access_token}` },
     cache: "no-store",
   });
@@ -44,14 +53,14 @@ export async function getNowPlayingOrRecent() {
     if (!recent.ok) throw new Error(`Spotify recent error: ${recent.status} ${await recent.text()}`);
 
     const data = await recent.json();
-    const item = data?.items?.[0]?.track;
+    const item: SpotifyTrack | undefined = data?.items?.[0]?.track;
     if (!item) return { is_playing: false, item: null };
 
     return {
       is_playing: false,
       item: {
         name: item.name,
-        artists: item.artists?.map((a: any) => a.name) ?? [],
+        artists: item.artists?.map((artist: SpotifyArtist) => artist.name) ?? [],
         albumImageUrl: item.album?.images?.[0]?.url ?? "",
         externalUrl: item.external_urls?.spotify ?? "",
       },
@@ -60,14 +69,14 @@ export async function getNowPlayingOrRecent() {
 
   if (!res.ok) throw new Error(`Spotify now playing error: ${res.status} ${await res.text()}`);
   const json = await res.json();
-  const track = json?.item;
+  const track: SpotifyTrack | undefined = json?.item;
   if (!track) return { is_playing: false, item: null };
 
   return {
     is_playing: Boolean(json?.is_playing),
     item: {
       name: track.name,
-      artists: track.artists?.map((a: any) => a.name) ?? [],
+      artists: track.artists?.map((artist: SpotifyArtist) => artist.name) ?? [],
       albumImageUrl: track.album?.images?.[0]?.url ?? "",
       externalUrl: track.external_urls?.spotify ?? "",
     },
