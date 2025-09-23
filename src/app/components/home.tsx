@@ -41,7 +41,7 @@ export function Home() {
             </h1>
 
             <p className="text-black font-normal text-pretty leading-relaxed lg:text-left text-center">
-              <span>rutgers '27 computer science student, software engineer, technical writer</span><br />
+              <span>rutgers &#39;27 computer science student, software engineer, technical writer</span><br />
             </p>
 
             <p className="text-sm text-black/70 font-normal text-pretty leading-relaxed lg:text-left text-center">
