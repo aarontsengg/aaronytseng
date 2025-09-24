@@ -69,7 +69,7 @@ export function Mood() {
           }`}
         >
           <h2 className="text-2xl font-semibold mb-2 lowercase">current mood</h2>
-          <p className="text-muted-foreground text-sm max-w-xl mx-auto lowercase">what i&apos;m listening to right now</p>
+          <p className="text-muted-foreground text-sm max-w-xl mx-auto lowercase">what im listening to right now</p>
         </div>
 
         <div
