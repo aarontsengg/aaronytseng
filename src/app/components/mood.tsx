@@ -29,7 +29,7 @@ export function Mood() {
       { threshold: 0.1 },
     )
 
-    const element = document.getElementById("mood-section")
+    const element = document.getElementById("mood")
     if (element) {
       observer.observe(element)
     }
