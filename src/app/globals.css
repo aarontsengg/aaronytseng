@@ -32,6 +32,7 @@ body {
   background: linear-gradient(to right, #ffffff, #e4e8ff);
   color: var(--foreground);
   font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+  scroll-behavior: smooth;
 }
 
 /* Animated hover underline for navbar links */
